@@ -17,10 +17,10 @@ class wasteDisposalRobot:
         self.leftBelt = Motor(Port.C, Direction.CLOCKWISE)
         self.rightBelt = Motor(Port.B, Direction.CLOCKWISE)
         
-        #self.claw = Motor(Port.A, Direction.CLOCKWISE)
+        self.claw = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 
         #self.colorSensor = ColorSensor(Port.S1)
-        #self.distanceSensor = UltrasonicSensor(Port.S2)
+        self.distanceSensor = UltrasonicSensor(Port.S2)
 
         # Initializing the drivebase.
         self.robot = DriveBase(self.leftBelt, self.rightBelt, wheel_diameter=56, axle_track=114)  # Add wheel_diameter and axle_track for accurate movement
@@ -30,21 +30,26 @@ class wasteDisposalRobot:
         self.robot.drive(speed_left, speed_right)
 
     def grip(self):
-        #Grip box (e.g., close the claw)
-        #self.claw.run_target(200, 0)  # Assuming 0 is the closed position
-        pass
+        self.claw.run(2000)
+        #self.claw.run_target(50, 0)  # Assuming 0 is the closed position
+        
 
     def release(self):
-        #Release box (e.g., open the claw)
-        #self.claw.run_target(200, 90)  # Assuming 90 is the open position
-        pass
+        self.claw.run_target(50, 90)  # Assuming 90 is the open position
+       
 
 
 def testRobot():
     robot = wasteDisposalRobot()
     
-    while True:
-        robot.drive(0, 300)
+    while robot.distanceSensor.distance() > 200:
+        #(Straight, turn(+ = R,   - = L))
+        #robot.drive(200, 0)
+        robot.grip()
+        #wait(10)
+        #robot.release
+        
+    robot.drive(0,0)
 
 
 # Run the test
