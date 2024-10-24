@@ -1,4 +1,4 @@
-#Import libraries.
+#!/usr/bin/env pybricks-micropython
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor
 from pybricks.parameters import Port, Direction
@@ -12,19 +12,18 @@ ev3 = EV3Brick()
 
 class wasteDisposalRobot:
     def __init__(self):
+        
         # Initializing motors.
         self.leftBelt = Motor(Port.C, Direction.CLOCKWISE)
         self.rightBelt = Motor(Port.B, Direction.CLOCKWISE)
-
+        
         self.claw = Motor(Port.A, Direction.COUNTERCLOCKWISE)
 
-        #Initializing sensors
-        self.colorSensor = ColorSensor(Port.S1)
+        #self.colorSensor = ColorSensor(Port.S1)
         self.distanceSensor = UltrasonicSensor(Port.S2)
 
         # Initializing the drivebase.
-        self.robot = DriveBase(self.leftBelt, self.rightBelt, wheel_diameter=56,
-                               axle_track=114)  # Add wheel_diameter and axle_track for accurate movement
+        self.robot = DriveBase(self.leftBelt, self.rightBelt, wheel_diameter=56, axle_track=114)  # Add wheel_diameter and axle_track for accurate movement
 
     def drive(self, speed_left, speed_right):
         # Drive the robot with a specific speed for the left and right wheels
@@ -41,15 +40,15 @@ class wasteDisposalRobot:
 
 def testRobot():
     robot = wasteDisposalRobot()
-    robot.grip()
-
-    #while robot.distanceSensor.distance() > 200:
+    
+    while robot.distanceSensor.distance() > 200:
         #(Straight, turn(+ = R,   - = L))
-        #robot.drive(200, 0)
+        robot.drive(100, 0)
         #robot.grip()
         #robot.release
-
-    #robot.drive(0, 0)
+        
+    robot.drive(0,0)
+    robot.grip()
 
 
 # Run the test
