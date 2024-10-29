@@ -18,7 +18,7 @@ class wasteDisposalRobot:
         self.leftBelt = Motor(Port.C, Direction.CLOCKWISE)
         self.rightBelt = Motor(Port.B, Direction.CLOCKWISE)
         
-        self.claw = Motor(Port.A, Direction.COUNTERCLOCKWISE)
+        self.claw = Motor(Port.A, Direction.CLOCKWISE)
 
         #self.colorSensor = ColorSensor(Port.S1)
         self.distanceSensor = UltrasonicSensor(Port.S2)
@@ -31,26 +31,27 @@ class wasteDisposalRobot:
         self.robot.drive(speed_left, speed_right)
 
     def grip(self):
-        # self.claw.run_angle(90,90)
-        self.claw.run_angle(25, 30)
+        self.claw.run_angle(90,90)
+        #self.claw.run_angle(25, 30)
         # self.claw.run_target(50, 0)  # Assuming 0 is the closed position
 
     def release(self):
-        self.claw.run_angle(25, -30)  # Assuming 90 is the open position
+       self.claw.run_angle(90,-90)
+       #self.claw.run_angle(25, -30)  # Assuming 90 is the open position
 
 
 def testRobot():
     robot = wasteDisposalRobot()
     
-    while robot.distanceSensor.distance() > 200:
+    #while robot.distanceSensor.distance() > 200:
         #(Straight, turn(+ = R,   - = L))
-        robot.drive(100, 0)
+        #robot.drive(100, 0)
         #robot.grip()
         #robot.release
         
         
     robot.drive(0,0)
-    robot.grip()
+    robot.release()
 
 
 # Run the test
