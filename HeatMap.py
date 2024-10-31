@@ -1,6 +1,17 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor, GyroSensor
+from pybricks.parameters import Port, Direction
+from pybricks.robotics import DriveBase
+from pybricks.tools import wait
+
+leftBelt = Motor(Port.C, Direction.CLOCKWISE)
+rightBelt = Motor(Port.B, Direction.CLOCKWISE)
+
+distanceSensor = UltrasonicSensor(Port.S2)
+gyroSensor = GyroSensor(Port.S1)
+
 # Generate a 12x12 grid with random values to represent heatmap data
 gridSize = 12
 heatmap = np.zeros((gridSize, gridSize))
@@ -11,14 +22,14 @@ def moveRobot(steps):
     x, y = gridSize // 2, gridSize // 2 # Will start the robot in the middle of grid.
     for _ in range(steps):
         updateHeatmap(x, y)
-        leftMotor.run_angle(200, 360, wait=False)
-        rightMotor.runAngle(200, 360)
+        leftBelt.run_angle(200, 360, wait=False)
+        rightBelt.runAngle(200, 360)
         wait(1000)
-        distance = ultrasonicSensor.distance()
+        distance = UltrasonicSensor.distance()
         angle = gyroSensor.angle()
         if distance < 300:
-            leftMotor.run_angle(200, 180, wait=False)
-            rightMotor.runAngle(200, -180)
+            leftBelt.run_angle(200, 180, wait=False)
+            rightBelt.runAngle(200, -180)
         else:
             x += random.choice([-1, 0, 1])
             y += random.choice([-1, 0, 1])
