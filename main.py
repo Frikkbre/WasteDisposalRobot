@@ -10,6 +10,20 @@ from pybricks.media.ev3dev import SoundFile, ImageFile
 import matplotlib.pyplot as plt
 import numpy as np
 
+import csv
+
+
+with open('writingTest.csv', 'w') as f:
+    writer = csv.writer(f)
+    def runRobot():
+        list = [1,2,3,4,5]
+        for i in range(0, 10):
+            list.append(i)
+            print(list)
+            writer.writerow(list)
+            
+    runRobot()
+
 # This program requires LEGO EV3 MicroPython v2.0 or higher.
 # Click "Open user guide" on the EV3 extension tab for more information.
 
@@ -27,3 +41,5 @@ class Robot:
 class Map:
     gridSize = 12
     heatMap = np.zeros((gridSize, gridSize))
+        
+        
